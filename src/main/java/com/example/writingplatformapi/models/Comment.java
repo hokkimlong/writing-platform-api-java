@@ -19,7 +19,7 @@ public class Comment {
     @CreationTimestamp
     private Date createdDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
@@ -55,9 +55,6 @@ public class Comment {
         this.createdDate = createdDate;
     }
 
-    public Article getArticle() {
-        return article;
-    }
 
     public void setArticle(Article article) {
         this.article = article;

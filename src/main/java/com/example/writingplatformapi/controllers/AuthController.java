@@ -3,6 +3,7 @@ package com.example.writingplatformapi.controllers;
 import com.example.writingplatformapi.exception.UserexistedException;
 import com.example.writingplatformapi.models.ResponseDto;
 import com.example.writingplatformapi.models.User;
+import com.example.writingplatformapi.models.UserResponseDto;
 import com.example.writingplatformapi.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+
 
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -38,7 +40,7 @@ public class AuthController {
     }
 
     @RequestMapping("/user/{id}")
-    public User getUserById() {
-        return null;
+    public UserResponseDto getUserById(@PathVariable int id) {
+       return authService.getById(id);
     }
 }

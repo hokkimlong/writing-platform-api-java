@@ -2,6 +2,8 @@ package com.example.writingplatformapi.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Tag {
     @Id
@@ -9,6 +11,9 @@ public class Tag {
     private int id;
     private String name;
     private String slug;
+
+    @ManyToMany(mappedBy = "tags")
+    private List<Article> articles;
 
     public int getId() {
         return id;

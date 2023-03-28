@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Article {
@@ -17,6 +19,28 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "article_tag",
+            joinColumns = @JoinColumn(name="article_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
+
+    @OneToMany(mappedBy = "article")
+    private List<Comment> comments;
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+
 
     public int getId() {
         return id;
