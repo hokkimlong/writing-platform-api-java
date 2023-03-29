@@ -5,9 +5,11 @@ import com.example.writingplatformapi.models.User;
 import com.example.writingplatformapi.models.UserRepository;
 import com.example.writingplatformapi.models.UserResponseDto;
 import com.example.writingplatformapi.utils.PasswordUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public class AuthService {
@@ -33,6 +35,16 @@ public class AuthService {
         userResponseDto.email = user.getEmail();
         userResponseDto.name = user.getName();
         return userResponseDto;
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+        User currentUser = new User();
+        currentUser.setEmail(jwt.getClaim("email").toString());
+        currentUser.setName(jwt.getClaim("name").toString());
+        currentUser.setId(Integer.parseInt(jwt.getClaim("id").toString()));
+        return currentUser;
     }
 
 }

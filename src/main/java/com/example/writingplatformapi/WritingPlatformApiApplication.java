@@ -1,13 +1,13 @@
 package com.example.writingplatformapi;
 
+import com.example.writingplatformapi.config.RsaKeyProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeyProperties.class)
 public class WritingPlatformApiApplication {
 
     public static void main(String[] args) {
