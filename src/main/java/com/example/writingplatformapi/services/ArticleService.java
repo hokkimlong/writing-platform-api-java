@@ -12,10 +12,12 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
+    private final AuthService authService;
 
-    public ArticleService(ArticleRepository articleRepository, TagRepository tagRepository) {
+    public ArticleService(ArticleRepository articleRepository, TagRepository tagRepository, AuthService authService) {
         this.articleRepository = articleRepository;
         this.tagRepository = tagRepository;
+        this.authService = authService;
     }
 
     public Article create(CreateArticleDto article) {
@@ -33,8 +35,7 @@ public class ArticleService {
         Article newArticle = new Article();
         newArticle.setTitle(article.title);
         newArticle.setContent(article.content);
-        User currentUser = new User();
-        currentUser.setId(2);
+        User currentUser = authService.getCurrentUser();
         newArticle.setUser(currentUser);
         newArticle.setTags(tags);
 
@@ -44,12 +45,13 @@ public class ArticleService {
 
     public Iterable<Article> findAll(String search, Integer tagId, Integer userId) {
         if (userId != null) {
-            return articleRepository.findAllByUserId(userId);
-        } else if (tagId != null) {
-            return articleRepository.findAllByTags_Id(tagId);
+            return articleRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+        }
+        else if (tagId != null) {
+            return articleRepository.findAllByTags_IdOrderByCreatedAtDesc(tagId);
         }
 
-        return articleRepository.findAllByTitleContainingIgnoreCase(search);
+        return articleRepository.findAllByTitleContainingIgnoreCaseOrderByCreatedAtDesc(search);
     }
 
     public Optional<Article> getArticleById(int id) {

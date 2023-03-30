@@ -68,7 +68,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors()
                 .and()
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/Auth/login","/api/Articles/**","/api/Tags/**").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/Auth","/api/Auth/login","/api/Articles/**","/api/Tags/**").permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .build();

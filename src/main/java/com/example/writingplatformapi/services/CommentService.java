@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CommentService {
    private final CommentRepository commentRepository;
+   private final AuthService authService;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, AuthService authService) {
         this.commentRepository = commentRepository;
+        this.authService = authService;
     }
 
     public Iterable<Comment> getArticleComment(int id){
@@ -21,8 +23,7 @@ public class CommentService {
         Article article = new Article();
         article.setId(createCommentDto.articleId);
         comment.setArticle(article);
-        User currentUser = new User();
-        currentUser.setId(1);
+        User currentUser = authService.getCurrentUser();
         comment.setUser(currentUser);
         return commentRepository.save(comment);
 

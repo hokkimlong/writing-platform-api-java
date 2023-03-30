@@ -14,7 +14,7 @@ public class Article {
     private int id;
     private String title;
     @CreationTimestamp
-    private Date createdDate;
+    private Date createdAt;
     private String content;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -58,12 +58,12 @@ public class Article {
         this.title = title;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(Date createdDate) {
+        this.createdAt = createdDate;
     }
 
     public String getContent() {
